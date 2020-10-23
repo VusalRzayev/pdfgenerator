@@ -17,18 +17,7 @@ public class PdfGenerator {
 
     public void createPDF (String pdfFilename, ArrayList<Field> fields){
 
-        // ArrayList<Field> fields = new ArrayList<>();
-
-        // Field field = new Field();
-        // field.setFieldName("S1");
-        // field.setFieldDescription("Evvelki ilde");
-        // field.setFieldValue(1d);
-
-        // fields.add(field);
-
-
-
-
+        float[] columnWidths = new float[fields.size()];
         Document doc = new Document();
         PdfWriter docWriter = null;
 
@@ -52,23 +41,32 @@ public class PdfGenerator {
             doc.addTitle("Report with Column Headings");
             doc.setPageSize(PageSize.LETTER);
 
-            //open document
+
             doc.open();
 
-            //create a paragraph
-            Paragraph paragraph = new Paragraph("iText ® is a library that allows you to create and " +
-                    "manipulate PDF documents. It enables developers looking to enhance web and other " +
-                    "applications with dynamic PDF document generation and/or manipulation.");
 
 
 
-            //specify column widths
-            float[] columnWidths = {1.5f, 1.5f, 1.5f, 1.5f,1.5f,1.5f,1.5f,1.5f,1.5f,1.5f};
-            //create PDF table with the given widths
+
+//            for(int i = 0; i < fields.size(); i++) {
+//                columnWidth.add(1.5F);
+//            }
+
+
+            for(int i = 0; i < fields.size(); i++) {
+                columnWidths[i] = 1.5f;
+            }
             PdfPTable table = new PdfPTable(columnWidths);
-            // set table width a percentage of the page width
+
             table.setWidthPercentage(90f);
 
+
+            List elements = new List();
+            for(int i = 0; i < fields.size(); i++) {
+                elements.add(fields.get(i).getFieldName() + "      " + fields.get(i).getFieldDescription());
+            }
+
+            doc.add(elements);
 
 
             for(int i = 0; i < fields.size(); i++) {
@@ -80,36 +78,19 @@ public class PdfGenerator {
             }
 
 
-            List elements = new List();
-            for(int i = 0; i < fields.size(); i++) {
-                elements.add(fields.get(i).getFieldName() + "      " + fields.get(i).getFieldDescription());
+            doc.add( Chunk.NEWLINE );
+            doc.add( Chunk.NEWLINE );
 
-            }
-
-            doc.add(elements);
+            doc.add(table);
 
 
-            //insert column headings
-//            insertCell(table, "S1", Element.ALIGN_LEFT, 1, bfBold12);
-//            insertCell(table, "S2", Element.ALIGN_LEFT, 1, bfBold12);
-//            insertCell(table, "K1", Element.ALIGN_LEFT, 1, bfBold12);
-//            insertCell(table, "K2", Element.ALIGN_LEFT, 1, bfBold12);
-//            insertCell(table, "E", Element.ALIGN_LEFT, 1, bfBold12);
-//            insertCell(table, "V", Element.ALIGN_LEFT, 1, bfBold12);
-//            insertCell(table, "B", Element.ALIGN_LEFT, 1, bfBold12);
-//            insertCell(table, "B1", Element.ALIGN_LEFT, 1, bfBold12);
-//            insertCell(table, "B2", Element.ALIGN_LEFT, 1, bfBold12);
-//            insertCell(table, "B3", Element.ALIGN_LEFT, 1, bfBold12);
+
+
+
+
             table.setHeaderRows(1);
 
-//            for(int x=1; x<=10; x++) {
-//
-//                insertCell(table, ""+x, Element.ALIGN_LEFT, 1, bf12);
-//
-//            }
 
-            paragraph.add(table);
-            doc.add(paragraph);
 
         }
         catch (DocumentException dex)

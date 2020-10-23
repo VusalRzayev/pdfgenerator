@@ -64,8 +64,15 @@ public class MainController {
                 "No impact", "", 3), new Consideration("active", "10 hours"),
                 new ConductUser("saa123321", "document"), new BudgetLoss("No type", "1000 AZN"), "deny");
 
+        TeklifModel teklifModel1 = new TeklifModel("Rashad LLC", "ssdsds12232", new RepresentativeUser("saass", "document"),
+                "activity1",new Information(new Date(2020, 10, 23), 1,
+                "Discount", "Unknown Aim", "10 hours",
+                "No type", 1000, "No additional income",
+                "No impact", "", 3), new Consideration("active", "10 hours"),
+                new ConductUser("saa123321", "document"), new BudgetLoss("No type", "1000 AZN"), "deny");
 
         teklifModels.add(teklifModel);
+        teklifModels.add(teklifModel1);
         xlsGenerator.createXLS(xlsFile, teklifModels);
         return "Ok";
     }

@@ -215,7 +215,7 @@ public class XlsGenerator {
             for (int j = 0; j < 22; j++) {
                 sheet.setColumnWidth(j, 12 * 256);
                 Cell cell = row.createCell(j);
-                row.getCell(j).setCellStyle(styles.get("style2"));
+                row.getCell(j).setCellStyle(styles.get("style3"));
                 if (j == 0) {
                     row.getCell(j).setCellValue(models.get(i).getBudgetOrganization());
                 } else if (j == 1) {
@@ -225,45 +225,45 @@ public class XlsGenerator {
                 } else if(j == 3) {
                     row.getCell(j).setCellValue(models.get(i).getUser().getDoc());
                 } else if (j == 4) {
-                    row.getCell(j).setCellValue("");
+                    row.getCell(j).setCellValue(models.get(i).getActivites());
                 } else if (j == 5) {
-                    row.getCell(j).setCellValue(names.get(j + 2));
+                    row.getCell(j).setCellValue(models.get(i).getInformation().getDateFormat());
                 }  else if (j == 6) {
-                    row.getCell(j).setCellValue(names.get(j + 2));
+                    row.getCell(j).setCellValue(models.get(i).getInformation().getId());
                 } else if (j == 7) {
-                    row.getCell(j).setCellValue(names.get(j + 2));
+                    row.getCell(j).setCellValue(models.get(i).getInformation().getDiscountType());
                 } else if (j == 8) {
-                    row.getCell(j).setCellValue(names.get(j + 2));
+                    row.getCell(j).setCellValue(models.get(i).getInformation().getDiscountAim());
                 } else if (j == 9) {
-                    row.getCell(j).setCellValue(names.get(j + 2));
+                    row.getCell(j).setCellValue(models.get(i).getInformation().getDiscountDuration());
                 } else if (j == 10) {
-                    row.getCell(j).setCellValue(names.get(j + 2));
+                    row.getCell(j).setCellValue(models.get(i).getInformation().getActivityDiscType());
                 } else if (j == 11) {
-                    row.getCell(j).setCellValue(names.get(j + 2));
+                    row.getCell(j).setCellValue(models.get(i).getInformation().getDiscountAmount());
                 } else if (j == 12) {
-                    row.getCell(j).setCellValue(names.get(j + 2));
+                    row.getCell(j).setCellValue(models.get(i).getInformation().getAdditionalIncome());
                 } else if (j == 13) {
-                    row.getCell(j).setCellValue(names.get(j + 2));
+                    row.getCell(j).setCellValue(models.get(i).getInformation().getImpact());
                 } else if (j == 14) {
-                    row.getCell(j).setCellValue(names.get(j + 2));
+                    row.getCell(j).setCellValue(models.get(i).getInformation().getBlank());
                 } else if (j == 15) {
-                    row.getCell(j).setCellValue(names.get(j + 2));
+                    row.getCell(j).setCellValue(models.get(i).getInformation().getCntOfUsers());
                 }else if (j == 16) {
-                    row.getCell(j).setCellValue(names.get(j + 3));
+                    row.getCell(j).setCellValue(models.get(i).getConsideration().getStatus());
                 }  else if (j == 17) {
-                    row.getCell(j).setCellValue(names.get(j + 3));
+                    row.getCell(j).setCellValue(models.get(i).getConsideration().getDuration());
                 }else if (j == 18) {
-                    row.getCell(j).setCellValue(names.get(j + 4));
+                    row.getCell(j).setCellValue(models.get(i).getConductUser().getSaa());
 
                 }
                 else if (j == 19) {
-                    row.getCell(j).setCellValue(names.get(j + 4));
+                    row.getCell(j).setCellValue(models.get(i).getConductUser().getDoc());
                 }
                 else if (j == 20) {
-                    row.getCell(j).setCellValue(names.get(j + 5));
+                    row.getCell(j).setCellValue(models.get(i).getBudgetLoss().getType());
                 }
                 else if (j == 21) {
-                    row.getCell(j).setCellValue(names.get(j + 5));
+                    row.getCell(j).setCellValue(models.get(i).getBudgetLoss().getAmount());
                 }
             }
         }
@@ -310,6 +310,21 @@ public class XlsGenerator {
 
         styles.put("style2", titleCellStyle);
 
+        CellStyle dataStyle = workbook.createCellStyle();
+        Font dataFont = workbook.createFont();
+        dataStyle.setWrapText(true);
+        dataFont.setFontHeightInPoints((short) 12);
+        dataFont.setFontName("Arial");
+        dataFont.setColor(IndexedColors.BLACK.getIndex());
+        dataStyle.setAlignment(HorizontalAlignment.CENTER);
+        dataStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        dataStyle.setFont(dataFont);
+        dataStyle.setBorderBottom(BorderStyle.MEDIUM);
+        dataStyle.setBorderTop(BorderStyle.MEDIUM);
+        dataStyle.setBorderRight(BorderStyle.MEDIUM);
+        dataStyle.setBorderLeft(BorderStyle.MEDIUM);
+
+        styles.put("style3", dataStyle);
 
     }
 

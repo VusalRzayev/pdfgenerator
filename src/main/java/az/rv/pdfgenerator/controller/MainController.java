@@ -50,7 +50,7 @@ public class MainController {
         Field field1 = new Field("S2", "S2_Description", 2d);
         Field field2 = new Field("K1", "K1_Description", 3d);
         Field field3 = new Field("K2", "K2_Description", 4d);
-        Field field4 = new Field("B", "B_Description", 5d);
+        Field field4 = new Field("BƏ", "B_Dəscription", 5d);
         Field field5 = new Field("B1", "B1_Description", 6d);
         Field field6 = new Field("B2", "B2_Description", 7d);
         Field field7 = new Field("S3", "B3_Description", 8d);
@@ -63,15 +63,16 @@ public class MainController {
         fields.add(field5);
         fields.add(field6);
         fields.add(field7);
+        byte[] array = simplePDFGenerator.createPDF(fields);
 //        byte[] array = xlsGenerator.createXLS(teklifModels);
 //        byte[] array = pdfGenerator.createPDF(teklifModels);
-        byte[] array = simpleXLSGenerator.createXls(fields);
+//        byte[] array = simpleXLSGenerator.createXls(fields);
 //        pdFtoXLSConverter = new PDFtoXLSConverter(array);
 //        byte[] bytes = pdFtoXLSConverter.convert();
         System.out.println(array.length);
         InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(array));
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Disposition", String.format("attachment; filename=test.xlsx"));
+        headers.set("Content-Disposition", String.format("attachment; filename=test.pdf"));
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentLength(array.length)

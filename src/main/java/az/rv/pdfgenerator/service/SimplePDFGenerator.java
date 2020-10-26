@@ -1,11 +1,13 @@
 package az.rv.pdfgenerator.service;
 
 import az.rv.pdfgenerator.controller.Field;
+import com.itextpdf.layout.element.Text;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,7 +28,7 @@ public class SimplePDFGenerator {
         DecimalFormat df = new DecimalFormat("0.00");
 
         System.out.println(fields);
-        BaseFont bf = BaseFont.createFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+
 
         try {
 //
@@ -45,6 +47,7 @@ public class SimplePDFGenerator {
 
 
             doc.open();
+            BaseFont bf = BaseFont.createFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
             for(int i = 0; i < fields.size(); i++) {
                 columnWidths[i] = 1.5f;
@@ -54,9 +57,15 @@ public class SimplePDFGenerator {
             table.setWidthPercentage(90f);
 
 
+
+
             List elements = new List();
             for(int i = 0; i < fields.size(); i++) {
-                elements.add(fields.get(i).getFieldName() + "      " + fields.get(i).getFieldDescription());
+                Phrase name = new Phrase(fields.get(i).getFieldName().trim());
+                Phrase description = new Phrase(fields.get(i).getFieldDescription().trim());
+
+                System.out.println(description);
+                elements.add(new ListItem(name+ "      " + description, new Font(bf, 8)));
             }
 
             doc.add(elements);
@@ -114,7 +123,7 @@ public class SimplePDFGenerator {
     private void insertCell(PdfPTable table, String text, int align, int colspan, BaseFont font){
 
         //create a new cell with the specified Text and Font
-        PdfPCell cell = new PdfPCell(new Phrase(text.trim(), new Font(font)));
+        PdfPCell cell = new PdfPCell(new Phrase(text.trim(), new Font(font, 8)));
         //set the cell alignment
         cell.setHorizontalAlignment(align);
         //set the cell column span in case you want to merge two or more cells

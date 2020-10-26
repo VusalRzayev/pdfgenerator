@@ -70,11 +70,18 @@ public class XlsGenerator {
         names.add("Tədiyə növü");
         names.add("İtki \nməbləği");
 
+        names.add(" ilin \nproqnozla\nşdırılmış \nitki \nməbləği");
+        names.add(" ilin \nproqnozla\nşdırılmış \nitki \nməbləği");
+        names.add(" ilin \nproqnozla\nşdırılmış \nitki \nməbləği");
+        names.add(" ilin \nproqnozla\nşdırılmış \nitki \nməbləği");
+
+        names.add("Təhlil \nnəticəsində  \nqəbul \nolunmuş qərar");
+
         sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 40));
 
         Row row = sheet.createRow(1);
         row.setHeight((short) (5*256));
-        for (int j = 0; j < 22; j++) {
+        for (int j = 0; j < 27; j++) {
             System.out.println(row.getRowNum());
 
             Cell cell = row.createCell(j);
@@ -102,15 +109,19 @@ public class XlsGenerator {
                 row.getCell(j).setCellValue(names.get(j + 3));
 
             } else if (j == 20) {
-                sheet.addMergedRegion(new CellRangeAddress(1, 1, j, j + 1));
+                sheet.addMergedRegion(new CellRangeAddress(1, 1, j, j + 5));
                 row.getCell(j).setCellValue(names.get(j + 4));
+            }
+            else if(j == 26) {
+                row.getCell(j).setCellValue(names.get(j + 1));
             }
         }
 
         Row row1 = sheet.createRow(2);
         row1.setHeight((short) (10*256));
 
-        for (int j = 0; j < 22; j++) {
+
+        for (int j = 0; j < 27; j++) {
 
             sheet.setColumnWidth(j, 10 * 256);
             Cell cell = row1.createCell(j);
@@ -165,6 +176,22 @@ public class XlsGenerator {
             else if (j == 21) {
                 row1.getCell(j).setCellValue(names.get(j + 5));
             }
+            else if(j == 22) {
+                row1.getCell(j).setCellValue(names.get(j + 5));
+            }
+            else if(j == 23) {
+                row1.getCell(j).setCellValue(names.get(j + 5));
+            }
+            else if(j == 24) {
+                row1.getCell(j).setCellValue(names.get(j + 5));
+            }
+            else if(j == 25) {
+                row1.getCell(j).setCellValue(names.get(j + 5));
+            }
+
+//            else if(j == 26) {
+//                row1.getCell(j).setCellValue(names.get(j + 5));
+//            }
         }
 
         setData();
@@ -192,7 +219,7 @@ public class XlsGenerator {
         for(int i = 0; i < models.size(); i++) {
             Row row = sheet.createRow(i+3);
             row.setHeight((short) (5*256));
-            for (int j = 0; j < 22; j++) {
+            for (int j = 0; j < 27; j++) {
                 sheet.setColumnWidth(j, 12 * 256);
                 Cell cell = row.createCell(j);
                 row.getCell(j).setCellStyle(styles.get("style3"));
@@ -245,6 +272,22 @@ public class XlsGenerator {
                 else if (j == 21) {
                     row.getCell(j).setCellValue(models.get(i).getBudgetLoss().getAmount());
                 }
+                else if (j == 22) {
+                    row.getCell(j).setCellValue(models.get(i).getBudgetLoss().getAmount());
+                }
+                else if (j == 23) {
+                    row.getCell(j).setCellValue(models.get(i).getBudgetLoss().getAmount());
+                }
+                else if (j == 24) {
+                    row.getCell(j).setCellValue(models.get(i).getBudgetLoss().getAmount());
+                }
+                else if (j == 25) {
+                    row.getCell(j).setCellValue(models.get(i).getBudgetLoss().getAmount());
+                }
+                else if(j == 26) {
+                    row.getCell(j).setCellValue(models.get(i).getDecision());
+                }
+
             }
         }
 

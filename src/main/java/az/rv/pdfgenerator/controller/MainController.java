@@ -42,7 +42,7 @@ public class MainController {
                 "Discount", "Unknown Aim", "10 hours",
                 "No type", 1000, "No additional income",
                 "No impact", "", 3), new Consideration("active", "10 hours"),
-                new ConductUser("saa123321", "document"), new BudgetLoss("No type", "1000 AZN"), "deny");
+                new ConductUser("saa123321", "document"), new BudgetLoss("No type", "1000 AZN", 2017, 2018, 2019, 2020), "deny");
 
         teklifModels.add(teklifModel);
 
@@ -63,8 +63,8 @@ public class MainController {
         fields.add(field5);
         fields.add(field6);
         fields.add(field7);
-        byte[] array = simplePDFGenerator.createPDF(fields);
-//        byte[] array = xlsGenerator.createXLS(teklifModels);
+//        byte[] array = simplePDFGenerator.createPDF(fields);
+        byte[] array = xlsGenerator.createXLS(teklifModels);
 //        byte[] array = pdfGenerator.createPDF(teklifModels);
 //        byte[] array = simpleXLSGenerator.createXls(fields);
 //        pdFtoXLSConverter = new PDFtoXLSConverter(array);
@@ -72,7 +72,7 @@ public class MainController {
         System.out.println(array.length);
         InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(array));
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Disposition", String.format("attachment; filename=test.pdf"));
+        headers.set("Content-Disposition", String.format("attachment; filename=test.xlsx"));
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentLength(array.length)

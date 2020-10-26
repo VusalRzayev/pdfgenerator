@@ -1,23 +1,15 @@
 package az.rv.pdfgenerator.service;
 
 import az.rv.pdfgenerator.Model.TeklifModel;
-import az.rv.pdfgenerator.controller.Field;
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.ss.formula.functions.Column;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFFont;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.stereotype.Service;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -39,7 +31,7 @@ public class XlsGenerator {
     Sheet sheet;
     Map<String, CellStyle> styles;
     ArrayList<TeklifModel> models;
-    public void createXLS(String xlsFileName, ArrayList<TeklifModel> models) {
+    public byte[] createXLS(ArrayList<TeklifModel> models) {
         this.models = models;
         workbook = new XSSFWorkbook();
 
@@ -78,18 +70,7 @@ public class XlsGenerator {
         names.add("Tədiyə növü");
         names.add("İtki \nməbləği");
 
-
-
-
-
-
-
-
-
-
-
         sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 40));
-//
 
         Row row = sheet.createRow(1);
         row.setHeight((short) (5*256));
@@ -186,15 +167,12 @@ public class XlsGenerator {
             }
         }
 
-
         setData();
 
-
-
-
-        FileOutputStream fileOut = null;
+        ByteArrayOutputStream fileOut = new ByteArrayOutputStream();
         try {
-            fileOut = new FileOutputStream(xlsFileName);
+
+
             workbook.write(fileOut);
             fileOut.close();
         } catch (
@@ -205,7 +183,17 @@ public class XlsGenerator {
             e.printStackTrace();
         }
 
+
+        byte[] bytes = fileOut.toByteArray();
+        try {
+            Files.write(Path.of(new File("myfile.bin").getAbsolutePath()), bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         autoSizeColumns(workbook);
+
+        return bytes;
+
     }
 
     private void setData() {

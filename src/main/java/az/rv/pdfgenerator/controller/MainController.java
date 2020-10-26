@@ -1,9 +1,7 @@
 package az.rv.pdfgenerator.controller;
 
 import az.rv.pdfgenerator.Model.*;
-import az.rv.pdfgenerator.service.PdfGenerator;
-import az.rv.pdfgenerator.service.SimplePDFGenerator;
-import az.rv.pdfgenerator.service.XlsGenerator;
+import az.rv.pdfgenerator.service.*;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -27,6 +25,8 @@ public class MainController {
     private PdfGenerator pdfGenerator;
     private SimplePDFGenerator simplePDFGenerator = new SimplePDFGenerator();
     public XlsGenerator xlsGenerator = new XlsGenerator();
+    public PDFtoXLSConverter pdFtoXLSConverter;
+    public SimpleXLSGenerator simpleXLSGenerator = new SimpleXLSGenerator();
     private ArrayList<TeklifModel> teklifModels;
     private ArrayList<Field> fields;
 
@@ -64,11 +64,14 @@ public class MainController {
         fields.add(field6);
         fields.add(field7);
 //        byte[] array = xlsGenerator.createXLS(teklifModels);
-        byte[] array = simplePDFGenerator.createPDF(fields);
+//        byte[] array = pdfGenerator.createPDF(teklifModels);
+        byte[] array = simpleXLSGenerator.createXls(fields);
+//        pdFtoXLSConverter = new PDFtoXLSConverter(array);
+//        byte[] bytes = pdFtoXLSConverter.convert();
         System.out.println(array.length);
         InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(array));
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Disposition", String.format("attachment; filename=test.pdf"));
+        headers.set("Content-Disposition", String.format("attachment; filename=test.xlsx"));
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentLength(array.length)

@@ -171,25 +171,17 @@ public class XlsGenerator {
 
         ByteArrayOutputStream fileOut = new ByteArrayOutputStream();
         try {
-
-
             workbook.write(fileOut);
             fileOut.close();
-        } catch (
-                FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (
-                IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
 
         byte[] bytes = fileOut.toByteArray();
-        try {
-            Files.write(Path.of(new File("myfile.bin").getAbsolutePath()), bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         autoSizeColumns(workbook);
 
         return bytes;

@@ -2,11 +2,13 @@ package az.rv.pdfgenerator.service;
 
 import az.rv.pdfgenerator.controller.Field;
 import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -14,7 +16,7 @@ public class SimplePDFGenerator {
 
 
 
-    public byte[] createPDF(ArrayList<Field> fields) throws DocumentException {
+    public byte[] createPDF(ArrayList<Field> fields) throws DocumentException, IOException {
         float[] columnWidths = new float[fields.size()];
         Document doc = new Document();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -24,6 +26,7 @@ public class SimplePDFGenerator {
         DecimalFormat df = new DecimalFormat("0.00");
 
         System.out.println(fields);
+        BaseFont bf = BaseFont.createFont("arialuni.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
         try {
 //
@@ -60,11 +63,11 @@ public class SimplePDFGenerator {
 
 
             for(int i = 0; i < fields.size(); i++) {
-                insertCell(table, fields.get(i).getFieldName(), Element.ALIGN_LEFT, 1, bfBold12);
+                insertCell(table, fields.get(i).getFieldName(), Element.ALIGN_LEFT, 1, bf);
                 System.out.println(fields.get(i).getFieldName());
             }
             for(int i = 0; i < fields.size(); i++) {
-                insertCell(table, fields.get(i).getFieldValue().toString(), Element.ALIGN_RIGHT, 1, bf12);
+                insertCell(table, fields.get(i).getFieldValue().toString(), Element.ALIGN_RIGHT, 1, bf);
             }
 
 
@@ -108,10 +111,10 @@ public class SimplePDFGenerator {
         return pdfBytes;
     }
 
-    private void insertCell(PdfPTable table, String text, int align, int colspan, Font font){
+    private void insertCell(PdfPTable table, String text, int align, int colspan, BaseFont font){
 
         //create a new cell with the specified Text and Font
-        PdfPCell cell = new PdfPCell(new Phrase(text.trim(), font));
+        PdfPCell cell = new PdfPCell(new Phrase(text.trim(), new Font(font)));
         //set the cell alignment
         cell.setHorizontalAlignment(align);
         //set the cell column span in case you want to merge two or more cells

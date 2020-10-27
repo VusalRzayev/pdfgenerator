@@ -113,7 +113,7 @@ public class XlsGenerator {
                 row.getCell(j).setCellValue(names.get(j + 4));
             }
             else if(j == 26) {
-                row.getCell(j).setCellValue(names.get(j + 1));
+                row.getCell(j).setCellValue(names.get(j + 5));
             }
         }
 

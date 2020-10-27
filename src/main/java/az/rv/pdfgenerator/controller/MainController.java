@@ -64,15 +64,15 @@ public class MainController {
         fields.add(field6);
         fields.add(field7);
 //        byte[] array = simplePDFGenerator.createPDF(fields);
-        byte[] array = xlsGenerator.createXLS(teklifModels);
-//        byte[] array = pdfGenerator.createPDF(teklifModels);
+//        byte[] array = xlsGenerator.createXLS(teklifModels);
+        byte[] array = pdfGenerator.createPDF(teklifModels);
 //        byte[] array = simpleXLSGenerator.createXls(fields);
 //        pdFtoXLSConverter = new PDFtoXLSConverter(array);
 //        byte[] bytes = pdFtoXLSConverter.convert();
         System.out.println(array.length);
         InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(array));
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Disposition", String.format("attachment; filename=test.xlsx"));
+        headers.set("Content-Disposition", String.format("attachment; filename=test.pdf"));
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentLength(array.length)
